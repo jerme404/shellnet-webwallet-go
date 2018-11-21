@@ -18,7 +18,7 @@ import (
 )
 
 var (
-	hostURI, hostPort string
+	hostURI, hostPort, hostRoot string
 	usrURI            string
 	walletURI         string
 	sessionDB         *redis.Pool
@@ -37,6 +37,7 @@ func init() {
 		hostPort = ":8080"
 		println("Using default HOST_PORT - 8080")
 	}
+    hostRoot = hostURI
 	hostURI += hostPort
 
 	if usrURI = os.Getenv("USER_URI"); usrURI == "" {
@@ -92,7 +93,7 @@ func index(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 // accountPage - shows wallet info and stufffs
 func accountPage(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	if !alreadyLoggedIn(res, req) {
-		http.Redirect(res, req, hostURI, http.StatusSeeOther)
+		http.Redirect(res, req, hostRoot, http.StatusSeeOther)
 		return
 	}
 	usr := sessionGetKeys(req, "session")
@@ -108,7 +109,7 @@ func accountPage(res http.ResponseWriter, req *http.Request, _ httprouter.Params
 	walletIcon := walletStatusColor(walletResponse)
 
 	pg := pageInfo{
-		URI:      hostURI,
+		URI:      hostRoot,
 		Messages: map[string]interface{}{"wallet_icon": walletIcon},
 	}
 	if txHash, err := req.Cookie("transactionHash"); err == nil {
@@ -129,11 +130,11 @@ func accountPage(res http.ResponseWriter, req *http.Request, _ httprouter.Params
 // signupPage - displays signup page - method: GET
 func signupPage(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	if alreadyLoggedIn(res, req) {
-		http.Redirect(res, req, hostURI, http.StatusSeeOther)
+		http.Redirect(res, req, hostRoot, http.StatusSeeOther)
 		return
 	}
 	pg := pageInfo{
-		URI:     hostURI,
+		URI:     hostRoot,
 		Element: "signup",
 	}
 	data := struct {
@@ -146,11 +147,11 @@ func signupPage(res http.ResponseWriter, req *http.Request, _ httprouter.Params)
 // loginPage - displays login page - method: GET
 func loginPage(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	if alreadyLoggedIn(res, req) {
-		http.Redirect(res, req, hostURI, http.StatusSeeOther)
+		http.Redirect(res, req, hostRoot, http.StatusSeeOther)
 		return
 	}
 	pg := pageInfo{
-		URI:     hostURI,
+		URI:     hostRoot,
 		Element: "login",
 	}
 	data := struct {
@@ -163,7 +164,7 @@ func loginPage(res http.ResponseWriter, req *http.Request, _ httprouter.Params) 
 // loginHandler handles logins, redirects to account page on succeess - method: POST
 func loginHandler(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	if alreadyLoggedIn(res, req) {
-		http.Redirect(res, req, hostURI+"/account", http.StatusSeeOther)
+		http.Redirect(res, req, hostRoot+"/account", http.StatusSeeOther)
 		return
 	}
 	username := req.FormValue("username")
@@ -189,13 +190,13 @@ func loginHandler(res http.ResponseWriter, req *http.Request, _ httprouter.Param
 	}
 
 	http.SetCookie(res, cookie)
-	http.Redirect(res, req, hostURI+"/account", http.StatusSeeOther)
+	http.Redirect(res, req, hostRoot+"/account", http.StatusSeeOther)
 }
 
 // deleteHandler - deletes user from database and deletes wallet
 func deleteHandler(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	if !alreadyLoggedIn(res, req) {
-		http.Redirect(res, req, hostURI, http.StatusSeeOther)
+		http.Redirect(res, req, hostRoot, http.StatusSeeOther)
 		return
 	}
 	usr := sessionGetKeys(req, "session")
@@ -211,13 +212,13 @@ func deleteHandler(res http.ResponseWriter, req *http.Request, _ httprouter.Para
 		MaxAge: -1,
 	}
 	http.SetCookie(res, cookie)
-	http.Redirect(res, req, hostURI, http.StatusSeeOther)
+	http.Redirect(res, req, hostRoot, http.StatusSeeOther)
 }
 
 // logoutHandler - removes the user cookie from redis - method: GET
 func logoutHandler(res http.ResponseWriter, req *http.Request, p httprouter.Params) {
 	if !alreadyLoggedIn(res, req) {
-		http.Redirect(res, req, hostURI, http.StatusSeeOther)
+		http.Redirect(res, req, hostRoot, http.StatusSeeOther)
 		return
 	}
 	cookie, _ := req.Cookie("session")
@@ -230,13 +231,13 @@ func logoutHandler(res http.ResponseWriter, req *http.Request, p httprouter.Para
 	}
 
 	http.SetCookie(res, cookie)
-	http.Redirect(res, req, hostURI, http.StatusSeeOther)
+	http.Redirect(res, req, hostRoot, http.StatusSeeOther)
 }
 
 // signupHandler tries to add a new user - method: POST
 func signupHandler(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	if alreadyLoggedIn(res, req) {
-		http.Redirect(res, req, hostURI, http.StatusSeeOther)
+		http.Redirect(res, req, hostRoot, http.StatusSeeOther)
 		return
 	}
 	var message string
@@ -263,7 +264,7 @@ func signupHandler(res http.ResponseWriter, req *http.Request, _ httprouter.Para
 // getWalletInfo - gets wallet info
 func getWalletInfo(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	if !alreadyLoggedIn(res, req) {
-		http.Redirect(res, req, hostURI, http.StatusSeeOther)
+		http.Redirect(res, req, hostRoot, http.StatusSeeOther)
 		return
 	}
 	usr := sessionGetKeys(req, "session")
@@ -280,7 +281,7 @@ func getWalletInfo(res http.ResponseWriter, req *http.Request, _ httprouter.Para
 // sendHandler - sends a transaction
 func sendHandler(res http.ResponseWriter, req *http.Request, p httprouter.Params) {
 	if !alreadyLoggedIn(res, req) {
-		http.Redirect(res, req, hostURI, http.StatusSeeOther)
+		http.Redirect(res, req, hostRoot, http.StatusSeeOther)
 		return
 	}
 	var message string
@@ -314,13 +315,13 @@ func sendHandler(res http.ResponseWriter, req *http.Request, p httprouter.Params
 		Value: message,
 	}
 	http.SetCookie(res, c)
-	http.Redirect(res, req, hostURI+"/account", http.StatusSeeOther)
+	http.Redirect(res, req, hostRoot+"/account", http.StatusSeeOther)
 }
 
 // keyHandler - shows the wallet keys of a user
 func keyHandler(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	if !alreadyLoggedIn(res, req) {
-		http.Redirect(res, req, hostURI, http.StatusSeeOther)
+		http.Redirect(res, req, hostRoot, http.StatusSeeOther)
 		return
 	}
 	usr := sessionGetKeys(req, "session")
@@ -338,13 +339,13 @@ func keyHandler(res http.ResponseWriter, req *http.Request, _ httprouter.Params)
 	}
 	http.SetCookie(res, c)
 	sessionSetKeys(response.Data["sessionID"].(string), usr.Username, usr.Address)
-	http.Redirect(res, req, hostURI+"/account/keys", http.StatusSeeOther)
+	http.Redirect(res, req, hostRoot+"/account/keys", http.StatusSeeOther)
 }
 
 // walletKeys - shows the wallet keys
 func walletKeys(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	if !alreadyLoggedIn(res, req) {
-		http.Redirect(res, req, hostURI, http.StatusSeeOther)
+		http.Redirect(res, req, hostRoot, http.StatusSeeOther)
 		return
 	}
 	usr := sessionGetKeys(req, "key")
