@@ -102,6 +102,7 @@ func signup(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	if err != nil {
 		encoder.Encode(jsonResponse{Status: err.Error()})
         fmt.Println("Database insert user error")
+        fmt.Println(err.Error())
 	} else {
 		encoder.Encode(jsonResponse{Status: "OK"})
 	}
