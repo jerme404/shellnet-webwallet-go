@@ -47,11 +47,11 @@
       </tr>
       <tr>
         <th>Available</th>
-        <td><span id="available_balance">{{ printf "%.2f" (index .Wallet "balance" "availableBalance") }} FRED</span></td>
+        <td><span id="available_balance">{{ printf "%.9f" (index .Wallet "balance" "availableBalance") }} FRED</span></td>
       </tr>
       <tr>
         <th>Locked / Unconfirmed</th>
-        <td><span id="locked_amount">{{ printf "%.2f" (index .Wallet "balance" "lockedAmount") }} FRED</span></td>
+        <td><span id="locked_amount">{{ printf "%.9f" (index .Wallet "balance" "lockedAmount") }} FRED</span></td>
       </tr>
       <tr>
         <th>Address</th>
