@@ -13,7 +13,7 @@ body {
 .full-container {
   display: flex;
   flex-direction: column;
-  background: url('../images/background.svg'); /* Designed by Freepik */
+  background: url('../images/background.jpeg');
   background-size: cover;
   background-position-y: center;
   height: 100%;
@@ -58,18 +58,19 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.7);
+  background: #FEFEFE;
   max-width: 300px;
-  padding: 16px 16px 24px 16px;
+  padding: 16px 12px 24px 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 .tagline {
-  color: #F7F7F7;
+  color: #2A2B30;
   font-size: 18px;
   padding: 24px 16px 24px 16px;
   align-items: center;
   text-align: center;
   justify-content: center;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+  /*text-shadow: 1px 1px 3px rgba(0,0,0,0.4);*/
 }
 .button-wrapper {
   flex: 1;
@@ -103,7 +104,7 @@ body {
   text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
 }
 .landing-logo {
-    height: 40px;
+    height: 80px;
     width: auto;
     margin-top: 16px;
     margin-bottom: 4px;
