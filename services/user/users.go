@@ -79,18 +79,21 @@ func signup(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	password := req.FormValue("password")
 	if isRegistered(username) {
 		encoder.Encode(jsonResponse{Status: "Username taken"})
+        fmt.Println("Username taken")
 		return
 	}
 
 	v, err := srpEnv.Verifier([]byte(username), []byte(password))
 	if err != nil {
 		encoder.Encode(jsonResponse{Status: err.Error()})
+        fmt.Println("User verify error")
 		return
 	}
 	ih, verif := v.Encode()
 	resb, err := http.Get(walletURI + "/create")
 	if err != nil {
 		encoder.Encode(jsonResponse{Status: err.Error()})
+        fmt.Println("Create wallet error")
 		return
 	}
 	response, err := decodeResponse(resb)
@@ -98,6 +101,7 @@ func signup(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	_, err = db.Exec("INSERT INTO accounts (ih, verifier, username, address) VALUES ($1, $2, $3, $4);", ih, verif, username, address)
 	if err != nil {
 		encoder.Encode(jsonResponse{Status: err.Error()})
+        fmt.Println("Database insert user error")
 	} else {
 		encoder.Encode(jsonResponse{Status: "OK"})
 	}
