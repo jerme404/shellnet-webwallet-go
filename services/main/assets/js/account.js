@@ -1,6 +1,6 @@
 // Forking config.
-const tickerSymbol = 'TRTL';
-const decimalPlaces = 2;
+const tickerSymbol = 'FRED';
+const decimalPlaces = 9;
 
 // Wallet update interval in milliseconds. Probably don't need to change this.
 const updateInterval = 5000;
