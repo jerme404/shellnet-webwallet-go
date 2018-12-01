@@ -25,7 +25,7 @@ var (
 )
 
 // Forking config.
-var addressFormat = "^MTIP([a-zA-Z0-9]{95}|[a-zA-Z0-9]{183})$"
+var addressFormat = "^dicKTiPZ([a-zA-Z0-9]{95}|[a-zA-Z0-9]{183})$"
 var divisor float64 = 100 // This is 100 for TRTL
 var transactionFee = 10 // This is 10 for TRTL
 
