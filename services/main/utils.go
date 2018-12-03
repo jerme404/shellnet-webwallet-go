@@ -58,7 +58,6 @@ func authMessage(res http.ResponseWriter, message, page, spec string) error {
 // alreadyLoggedIn - checks if the user is already logged in
 func alreadyLoggedIn(res http.ResponseWriter, req *http.Request) bool {
 	usr := sessionGetKeys(req, "session")
-	defer conn.Close()
 	if usr == nil {
 		cookie := &http.Cookie{
 			Name:   "session",
@@ -90,6 +89,7 @@ func sessionGetKeys(req *http.Request, name string) *userInfo {
 		return nil
 	}
 	conn := sessionDB.Get()
+	defer conn.Close()
 	reply, err := redis.Strings(conn.Do("HMGET", cookie.Value, "username", "address"))
 	if err != nil || len(reply) != 2 || reply[0] == "" {
 		return nil
