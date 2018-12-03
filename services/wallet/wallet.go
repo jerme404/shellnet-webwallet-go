@@ -157,7 +157,7 @@ func sendTransaction(res http.ResponseWriter, req *http.Request, _ httprouter.Pa
 		json.NewEncoder(res).Encode(jsonResponse{Status: "Incorrect Address Format"})
 		return
 	}
-	if matched, _ := regexp.MatchString("^[0-9]+\\.{0,1}[0-9]{0,2}$", amountStr); !matched {
+	if matched, _ := regexp.MatchString("^[0-9]+\\.{0,1}[0-9]{0,6}$", amountStr); !matched {
 		json.NewEncoder(res).Encode(jsonResponse{Status: "Incorrect Amount Format"})
 		return
 	}
