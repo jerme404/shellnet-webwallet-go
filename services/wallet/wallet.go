@@ -25,9 +25,9 @@ var (
 )
 
 // Forking config.
-var addressFormat = "^TRTL([a-zA-Z0-9]{95}|[a-zA-Z0-9]{183})$"
-var divisor float64 = 100 // This is 100 for TRTL
-var transactionFee = 10 // This is 10 for TRTL
+var addressFormat = "^dark([a-zA-Z0-9]{94}|[a-zA-Z0-9]{183})$"
+var divisor float64 = 1000000 // This is 100 for TRTL
+var transactionFee = 100000 // This is 10 for TRTL
 
 func init() {
 	var err error
@@ -157,7 +157,7 @@ func sendTransaction(res http.ResponseWriter, req *http.Request, _ httprouter.Pa
 		json.NewEncoder(res).Encode(jsonResponse{Status: "Incorrect Address Format"})
 		return
 	}
-	if matched, _ := regexp.MatchString("^[0-9]+\\.{0,1}[0-9]{0,2}$", amountStr); !matched {
+	if matched, _ := regexp.MatchString("^[0-9]+\\.{0,1}[0-9]{0,6}$", amountStr); !matched {
 		json.NewEncoder(res).Encode(jsonResponse{Status: "Incorrect Amount Format"})
 		return
 	}
