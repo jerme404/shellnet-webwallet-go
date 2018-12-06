@@ -104,10 +104,11 @@ input[type=password] {
 .button-green {
     margin-top: 16px;
     color: #FEFEFE !important;
-    background-color: #04A148;
+    background-color: #FF5722;
 }
 .button-green:hover {
-    background-color: #04AE4D;
+    color: #FEFEFE !important;
+    background-color: #E54E1F;
 }
 /* trasaction history */
 

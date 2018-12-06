@@ -75,11 +75,11 @@ body {
   flex: 1;
 }
 .button-green {
-  background-color: #04A148;
+  background-color: #FF5722;
 }
 .button-green:hover {
   color: #FEFEFE !important;
-  background-color: #04AE4D;
+  background-color: #E54E1F;
 }
 .btn-primary {
   margin: 10px 0px;
