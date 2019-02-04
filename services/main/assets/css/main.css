@@ -63,7 +63,7 @@ body {
   padding: 16px 16px 24px 16px;
 }
 .tagline {
-  color: ##FFF8Dc;
+  color: #FFF8DC;
   font-size: 18px;
   padding: 24px 16px 24px 16px;
   align-items: center;
@@ -90,10 +90,10 @@ body {
 }
 .signup-link {
   padding: 8px !important;
-  color: #FEFEFE;
+  color: #F7F7F7;
 }
 .signup-link:hover {
-  color: #04A148;
+  color: #169EC9;
 }
 .hello-user {
   color: #FEFEFE;
