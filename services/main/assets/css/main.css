@@ -13,7 +13,7 @@ body {
 .full-container {
   display: flex;
   flex-direction: column;
-  background: url('../images/background.svg'); /* Designed by Freepik */
+  background: url('../images/background.jpeg');
   background-size: cover;
   background-position-y: center;
   height: 100%;
@@ -63,7 +63,7 @@ body {
   padding: 16px 16px 24px 16px;
 }
 .tagline {
-  color: #F7F7F7;
+  color: ##FFF8Dc;
   font-size: 18px;
   padding: 24px 16px 24px 16px;
   align-items: center;
@@ -75,11 +75,11 @@ body {
   flex: 1;
 }
 .button-green {
-  background-color: #04A148;
+  background-color: #169EC9;
 }
 .button-green:hover {
   color: #FEFEFE !important;
-  background-color: #04AE4D;
+  background-color: #1280A3;
 }
 .btn-primary {
   margin: 10px 0px;
@@ -96,7 +96,7 @@ body {
   color: #04A148;
 }
 .hello-user {
-  color: #ED9E12;
+  color: #FEFEFE;
   font-size: 18px;
   padding: 8px 16px 24px 16px;
   text-align: center;
